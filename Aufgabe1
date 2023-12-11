@@ -1,0 +1,77 @@
+a)  Wie setzt man Polymorphie in C++ um?
+
+    - Function virtuell machen
+        ->  virtual void print();
+
+b)  Worin unterscheiden sich Templates in C++ von Generics in Java?
+
+    Java: Generic wird als einzelne klasse kompiliert und die platzhalter sind Object referenzen
+    C++:  Bei Templates wird fuer jeder platzhalter code generiert und einzeln kompiliert.
+
+c)  Wie realisiert man in C++ eine abstrakte Klasse?
+
+    - Indem man eine rein virtuelle function erstellt den function nicht in der virtuelle klasse implementiert.
+        ->  virtual <Ruckgabetyp> <Bezeichner>(Parameter..)=0;
+
+d)  Wofür wird der C++-Operator dynamic_cast eingesetzt?
+
+    - Beim Casten nach unten oder zur Seite ist der Vorgang unsicher und kann zu undefiniertem
+    Verhalten führen, falls er nicht erfolgreich ist. Dafür nutzt man dynamic_cast, sodass im
+    Falle einer nicht zulässigen Konvertierung ein nullptr zurückgegeben wird.
+
+        ->  Haustier* wauwau = new Hund();
+            Hund* tier = dynamic_cast<Hund*>(wauwau);
+
+e)  Was spricht dafür, einen Destruktor als virtual zu deklarieren?
+
+    - Bei abgeleiteten Klassen wird der nicht virtuelle Destruktor nur in der obersten Klasse ausgeführt,
+    und dadurch entsteht ein Memory Leak. Bei virtuellen Destruktoren hingegen werden alle Destruktoren
+    in der Klassenhierarchie von unten nach oben ausgeführt
+
+f)  Nennen Sie mindestens zwei Situationen, die die Verwendung von Initialisierungslisten in
+    Konstruktoren erforderlich machen.
+
+    1-  Wenn eine Klasse Referenzen als Mitglieder enthält
+
+        ->  int& myRef;
+
+            MyClass(int& ref) : myRef(ref)
+
+    2-  Wenn eine Klasse mehrere Konstruktoren hat und man sicherstellen möchten,
+        dass alle Konstruktoren denselben Initialisierungscode verwenden
+
+        ->  int data;
+
+            MyClass() : MyClass(0) {}
+            MyClass(int value) : data(value)
+
+g)  Erklären Sie, wie die drei Smart Pointer funktionieren: Shared pointer, unique pointer, weak pointer.
+
+        Shared pointer:
+            Speichert einen Zeiger, der einem oder mehreren Besitzern geteilt wird.
+
+        Unique pointer:
+            Speichert einen Zeiger, der nur einem Besitzer zugeordnet ist.
+
+        Weak pointer:
+            Ist eine „schwache“ temporäre Beziehung zu einem Zeiger
+
+h)  Welche Funktion hat das Schlüsselwort friend ?
+
+    friend ist ein fremdes Element, das vollen Zugriff auf geschützte Attribute eines Objekts erhält.
+
+i)  Wie kann man bei der Vererbung sicherstellen, dass öffentliche Funktions-Member aus einer
+    Oberklasse als geschützt (protected) geerbt werden?
+
+    - Indem man es in der deklaration angibt:
+        ->  class SubClass : protected MainClass {}
+
+j)  Warum sollten Funktions-Member, die ein Objekt nicht verändern, als const deklariert werden?
+
+    - Verhindert versehentliche Änderungen am Objekt und ist insbesondere bei Gettern sinnvoll.
+
+k)  Erklären Sie, wie es in C++ zum Diamantenproblem kommen kann und wie man es löst.
+
+    - Wenn eine Klasse von zwei klassen abgeleitet wird und den gleiche methode zwei mal den gleichen attribute erbt.
+    Man löst den Problem, indem man es als virtuelle Basisklass erbt.
+        ->  class <Klasse> : virtual public <Oberklasse_1>, <Oberklasse_2> {}
